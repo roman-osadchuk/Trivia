@@ -4,13 +4,13 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: '100%',
     alignItems: 'center',
   },
   backButtonContainer: {
     position: 'absolute',
-    top: 30,
+    top: 40,
     right: 30,
+    zIndex: 100,
   },
 
   image1: {
@@ -20,27 +20,22 @@ export const styles = StyleSheet.create({
   },
   image2: {
     position: 'absolute',
-    left: 0,
-    top: 100,
+    right: 0,
+    bottom: 0,
   },
   image3: {
     position: 'absolute',
-    left: 0,
-    top: 300,
+    right: 0,
+    top: 100,
   },
   image4: {
     position: 'absolute',
-    right: 0,
-    top: 0,
+    left: 0,
+    bottom: 0,
   },
   image5: {
     position: 'absolute',
     right: 0,
-    top: 100,
-  },
-  image6: {
-    position: 'absolute',
-    right: 0,
-    top: 300,
+    bottom: 0,
   },
 });

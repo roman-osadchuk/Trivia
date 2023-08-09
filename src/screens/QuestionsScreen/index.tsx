@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import type { RouteProp } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, Image, TouchableOpacity } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { DisplayQuestion } from 'src/components/DisplayQuestion';
-import { selectQuestions } from 'src/redux/modules';
-import { IPokemonType } from 'src/redux/modules/Questions/slices';
+import DisplayQuestion from 'src/components/DisplayQuestion';
+import { clearAllQuestions, selectQuestions } from 'src/redux/modules';
 import { RootStackParamList } from 'src/types/navigationTypes';
 import { Screen } from 'src/constants/screens';
+// @ts-ignore
 import BlueCloseIcon from 'src/icons/BlueCloseIcon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './styles';
@@ -17,44 +16,32 @@ const QuestionsScreen2 = require('src/assets/QuestionsScreen2.png');
 const QuestionsScreen3 = require('src/assets/QuestionsScreen3.png');
 const QuestionsScreen4 = require('src/assets/QuestionsScreen4.png');
 const QuestionsScreen5 = require('src/assets/QuestionsScreen5.png');
-const QuestionsScreen6 = require('src/assets/QuestionsScreen6.png');
 
 type navigationQuestionsProp = NativeStackNavigationProp<RootStackParamList, Screen.QuestionsScreen>;
-type routeQuestionsProp = RouteProp<RootStackParamList, Screen.QuestionsScreen>;
 
 type QuestionsScreenProps = {
   navigation: navigationQuestionsProp;
-  route: routeQuestionsProp;
 };
 
-export const QuestionsScreen = ({ navigation, route }: QuestionsScreenProps) => {
+export const QuestionsScreen = ({ navigation }: QuestionsScreenProps) => {
+  const dispatch = useDispatch();
+
   const [currentQuestion, setCurrentQuestion] = useState(0)
 
   const apiQuestions = useSelector(selectQuestions);
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   fetchCurrentPokemon();
-  // }, []);
-
-  // const fetchCurrentPokemon = () => {
-  //   dispatch(getPokemonInfo(route.params.pokemonName));
-  // };
-
-  const goBack = () => {
-    navigation.goBack();
-  };
-
-  // const typesString = currentPokemon.types.map((type: IPokemonType) => type?.type.name).join(', ');
 
   const onAnswer = () => {
-    console.log('onAnswer')
-    setCurrentQuestion(prevState => prevState++)
+    setCurrentQuestion(prevState => ++prevState)
 
     if (currentQuestion === apiQuestions.length - 1) {
       navigation.navigate(Screen.ResultsScreen);
     }
   }
+
+  const handleGoBack = () => {
+    dispatch(clearAllQuestions());
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
@@ -64,9 +51,8 @@ export const QuestionsScreen = ({ navigation, route }: QuestionsScreenProps) => 
       <Image style={styles.image3} source={QuestionsScreen3} resizeMode={'contain'} />
       <Image style={styles.image4} source={QuestionsScreen4} resizeMode={'contain'} />
       <Image style={styles.image5} source={QuestionsScreen5} resizeMode={'contain'} />
-      <Image style={styles.image6} source={QuestionsScreen6} resizeMode={'contain'} />
 
-      <TouchableOpacity style={styles.backButtonContainer} onPress={navigation.goBack}>
+      <TouchableOpacity style={styles.backButtonContainer} onPress={handleGoBack}>
         <BlueCloseIcon />
       </TouchableOpacity>
 

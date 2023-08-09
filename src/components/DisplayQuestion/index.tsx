@@ -1,10 +1,9 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { updateAnsweredQuestion } from 'src/redux/modules/Questions/actions';
+import React, { memo } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { updateAnsweredQuestion } from 'src/redux/modules/Questions/slices';
 import { IQuestion } from 'src/types/questionTypes';
 import { styles } from './styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectQuestions, selectAnsweredQuestions } from 'src/redux';
+import { useDispatch } from 'react-redux';
 
 type DisplayQuestionProps = {
   question: IQuestion;
@@ -14,7 +13,7 @@ type DisplayQuestionProps = {
   onAnswer: () => void;
 };
 
-export const DisplayQuestion = ({ question, index, length, key, onAnswer }: DisplayQuestionProps) => {
+const DisplayQuestion = ({ question, index, length, key, onAnswer }: DisplayQuestionProps) => {
   const dispatch = useDispatch();
 
   const checkIfAnswerIsCorrect = (answer: string) => {
@@ -42,7 +41,8 @@ export const DisplayQuestion = ({ question, index, length, key, onAnswer }: Disp
       <View style={styles.progressContainer}>
         <View style={styles.currentQuestion}>
           <Text style={styles.currentQuestionsText}>{index + 1}</Text>
-          <Text style={styles.totalQuestionsText}>/{length}</Text>
+          <Text style={styles.slash}>/</Text>
+          <Text style={styles.totalQuestionsText}>{length}</Text>
         </View>
         <View style={styles.progressLineContainer}>
           <View style={[styles.currentLine, { width: `${currentProgress * 100}%` }]} />
@@ -63,6 +63,6 @@ export const DisplayQuestion = ({ question, index, length, key, onAnswer }: Disp
       </View>
     </View>
   )
-
 };
 
+export default memo(DisplayQuestion)

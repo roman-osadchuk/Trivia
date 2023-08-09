@@ -3,6 +3,8 @@ export enum Colors {
   LIGHT_PINK = '#FFDBDB',
   PRIMARY_BLUE = '#4953BE',
   LIGHT_BLUE = '#DBDEFF',
-  ORANGE = '#FF7C7C',
+  ORANGE = '#FFA67A',
+  GINGER = '#FF7878',
   RED = '#FF6065',
+  GREY = '#F9F9F9',
 }

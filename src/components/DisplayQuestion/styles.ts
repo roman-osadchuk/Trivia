@@ -3,43 +3,53 @@ import { Colors } from 'src/constants/colors';
 
 export const styles = StyleSheet.create({
   cardContainer: {
-    width: '92%',
+    width: '88%',
+    height: '100%',
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerContainer: {
     marginVertical: 10,
+    alignItems: 'center',
   },
   categoryText: {
     fontSize: 31,
-    letterSpacing: 38,
-    fontWeight: '500',
+    fontWeight: '700',
     color: Colors.PRIMARY_BLUE,
   },
   levelText: {
+    marginTop: 7,
     fontSize: 13,
     fontWeight: '500',
-    letterSpacing: 3,
+    letterSpacing: 6,
     color: Colors.PRIMARY_BLUE,
   },
   progressContainer: {
+    width: '100%',
     marginVertical: 10,
   },
   currentQuestion: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 10,
   },
   currentQuestionsText: {
     fontWeight: '700',
     fontSize: 18,
-    color: Colors.ORANGE
+    color: Colors.GINGER
+  },
+  slash: {
+    top: 2,
+    fontWeight: '700',
+    fontSize: 18,
+    color: Colors.PRIMARY_BLUE
   },
   totalQuestionsText: {
-    top: 6,
+    top: 2,
     fontWeight: '700',
     fontSize: 14,
-    color: Colors.WHITE
+    color: Colors.PRIMARY_BLUE
   },
   progressLineContainer: {
     width: '100%',
@@ -52,33 +62,39 @@ export const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     zIndex: 10,
-    backgroundColor: Colors.ORANGE,
+    backgroundColor: Colors.GINGER,
   },
   questionContainer: {
+    alignSelf: 'flex-start',
+    width: '80%',
     marginVertical: 20,
   },
   questionText: {
     textAlign: 'left',
     fontSize: 25,
-    lineHeight: 36,
-    fontWeight: '500',
+    lineHeight: 42,
+    fontWeight: '400',
     color: Colors.PRIMARY_BLUE,
   },
   buttonsContainer: {
-
+    width: '100%',
   },
   trueButton: {
+    paddingVertical: 20,
+    alignItems: 'center',
     backgroundColor: Colors.PRIMARY_BLUE,
     borderWidth: 2,
     borderColor: Colors.PRIMARY_BLUE,
-    borderRadius: 8,
+    borderRadius: 12,
     marginBottom: 8,
   },
   falseButton: {
+    paddingVertical: 20,
+    alignItems: 'center',
     backgroundColor: Colors.WHITE,
     borderWidth: 2,
     borderColor: Colors.PRIMARY_BLUE,
-    borderRadius: 8,
+    borderRadius: 12,
   },
   falseText: {
     fontSize: 15,

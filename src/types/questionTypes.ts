@@ -20,3 +20,7 @@ export interface IQuestionResponse {
   response_code: number;
   results: IQuestion[];
 }
+
+export interface IQuestionDataResponse {
+  data: IQuestionResponse
+}

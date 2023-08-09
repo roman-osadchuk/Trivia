@@ -1,7 +1,7 @@
 import { persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createSlice, SerializedError } from '@reduxjs/toolkit';
-import { IAnsweredQuestion, IQuestion, IQuestionResponse } from 'src/types/questionTypes';
+import { IAnsweredQuestion, IQuestion } from 'src/types/questionTypes';
 
 const persistConfig = <any>{
   key: 'questions',
@@ -24,19 +24,19 @@ const initialState: IQuestionsState = {
 };
 
 
-
 const { reducer, actions } = createSlice({
   initialState,
   name: 'questions',
   reducers: {
     putAllQuestions(state, action) {
-      console.log('action', action)
       state.questions = action.payload;
     },
     updateAnsweredQuestion(state, action) {
-      console.log('updateAnsweredQuestion - action', action)
-      console.log('updateAnsweredQuestion - state', state)
-      state.answeredQuestions = [...state.answeredQuestions, ...action.payload];
+      state.answeredQuestions = state.answeredQuestions.concat(action.payload);
+    },
+    clearAllQuestions(state) {
+      state.questions = [];
+      state.answeredQuestions = [];
     },
     setQuestionsError(state, action) {
       state.error = action.payload;
@@ -47,5 +47,5 @@ const { reducer, actions } = createSlice({
   },
 });
 
-export const { putAllQuestions, setQuestionsError, setQuestionsLoading } = actions;
+export const { putAllQuestions, setQuestionsError, setQuestionsLoading, updateAnsweredQuestion, clearAllQuestions } = actions;
 export const questionsReducer = persistReducer(persistConfig, reducer);

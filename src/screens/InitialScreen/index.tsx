@@ -1,121 +1,153 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native';
 import { getQuestions } from 'src/redux/modules/Questions/actions';
-import { selectQuestions } from 'src/redux/modules';
+import { selectError, selectIsLoading, selectQuestions } from 'src/redux/modules';
 import { useDispatch, useSelector } from 'react-redux';
-import { PokemonCard } from 'src/components/DisplayQuestion';
-// import { IPokemons } from 'src/redux/modules/Questions';
 import { Screen } from 'src/constants/screens';
 import { styles } from './styles';
-import { useNavigation } from '@react-navigation/native';
 import { IDifficultyEnum } from 'src/types/questionTypes';
 import { DismissKeyboardView } from 'src/hoc/DismissKeyboard';
 import { Colors } from 'src/constants/colors';
 import { IS_IOS } from 'src/utils/metrics';
+import GradientButton from 'src/components/GradientButton';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'src/types/navigationTypes';
 
-const TriviaLogo = require('src/assets/Triva.png');
+// @ts-ignore
+import ArrowDownIcon from 'src/icons/ArrowDownIcon.svg';
+// @ts-ignore
+import DifficultyIcon from 'src/icons/DifficultyIcon.svg';
+// @ts-ignore
+import AmountIcon from 'src/icons/AmountIcon.svg';
+const TriviaLogo = require('src/assets/Trivia.png');
 const InitialScreenImage1 = require('src/assets/InitialScreenImage1.png');
 const InitialScreenImage2 = require('src/assets/InitialScreenImage2.png');
 const InitialScreenImage3 = require('src/assets/InitialScreenImage3.png');
 const InitialScreenImage4 = require('src/assets/InitialScreenImage4.png');
 
-export const InitialScreen: React.FC = () => {
-  const [amount, setAmount] = useState(0);
+type navigationInitialProp = NativeStackNavigationProp<RootStackParamList, Screen.InitialScreen>;
+
+type InitialScreenProps = {
+  navigation: navigationInitialProp;
+};
+
+export const InitialScreen = ({ navigation }: InitialScreenProps) => {
+  const [amount, setAmount] = useState('0');
   const [difficulty, setDifficulty] = useState(IDifficultyEnum.Easy);
   const [difficultyVisible, setDifficultyVisible] = useState(false);
   const apiQuestions = useSelector(selectQuestions);
+  const isLoading = useSelector(selectIsLoading);
+  const questionsError = useSelector(selectError);
   const dispatch = useDispatch();
-  const navigation = useNavigation();
 
   useEffect(() => {
-    fetchQuestions();
-  }, []);
+    if (apiQuestions.length && !isLoading) {
+      navigation.navigate(Screen.QuestionsScreen);
+    }
+  }, [apiQuestions, isLoading, navigation]);
+
+  useEffect(() => {
+    if (questionsError) {
+      Alert.alert('Error', questionsError?.message)
+    }
+  }, [questionsError])
 
   const fetchQuestions = () => {
     try {
-      dispatch(getQuestions(difficulty));
+      dispatch(getQuestions(difficulty as any));
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log('apiQuestions', apiQuestions)
-
   const showDifficultyOptions = () => {
     setDifficultyVisible(true);
   }
 
-  const hideDifficultyOptions = () => {
+  const onFocusInput = () => {
     setDifficultyVisible(false);
   }
 
   const onContinuePress = (): void => {
-    navigation.navigate(Screen.QuestionsScreen);
+    fetchQuestions();
+  }
+
+  const chooseDifficulty = (difficulty: IDifficultyEnum): void => {
+    setDifficulty(difficulty);
+    setDifficultyVisible(false);
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={IS_IOS ? 'position' : 'height'}
-      style={styles.keyboardContainer}
-      keyboardVerticalOffset={0}
-    >
-      <DismissKeyboardView>
-        <View style={styles.screenContainer}>
-
-          <Image style={styles.image1} source={InitialScreenImage1} resizeMode={'contain'} />
-          <Image style={styles.image2} source={InitialScreenImage2} resizeMode={'contain'} />
-          <Image style={styles.image3} source={InitialScreenImage3} resizeMode={'contain'} />
-          <Image style={styles.image4} source={InitialScreenImage4} resizeMode={'contain'} />
-
-          <View style={styles.headerWrapper}>
-            <Text style={styles.headerText}>Welcome to the</Text>
-            <Image style={styles.logoImage} source={TriviaLogo} resizeMode={'contain'} />
-          </View>
-
-          <View style={styles.inputWrapper}>
-            <View style={styles.inputLabel}>
-              <Image style={styles.inputLabelImage} source={TriviaLogo} resizeMode={'contain'} />
-              <Text style={styles.inputLabelText}>Difficulty</Text>
-            </View>
-            <TouchableOpacity onPress={showDifficultyOptions} style={styles.difficultyContainer}>
-              <View style={styles.difficultyWrapper}>
-                <Text style={styles.regularText}>{difficulty}</Text>
-                {/*<Icon></Icon>*/}
+    <>
+      <KeyboardAvoidingView
+        behavior={IS_IOS ? 'padding' : 'height'}
+        style={styles.keyboardContainer}
+        keyboardVerticalOffset={-20}
+      >
+        <DismissKeyboardView>
+          <>
+            <View style={styles.screenContainer}>
+              <View style={styles.headerWrapper}>
+                <Text style={styles.headerText}>Welcome to the</Text>
+                <Image style={styles.logoImage} source={TriviaLogo} resizeMode={'contain'} />
               </View>
-            </TouchableOpacity>
-          </View>
 
-          <View style={styles.inputWrapper}>
-            <View style={styles.inputLabel}>
-              <Image style={styles.inputLabelImage} source={TriviaLogo} resizeMode={'contain'} />
-              <Text style={styles.inputLabelText}>Amount</Text>
+              <View style={styles.inputsContainer}>
+                <View style={styles.inputWrapper}>
+                  <View style={styles.inputLabel}>
+                    <DifficultyIcon />
+                    <Text style={styles.inputLabelText}>Difficulty</Text>
+                  </View>
+                  <TouchableOpacity onPress={showDifficultyOptions} style={styles.difficultyContainer}>
+                    <View style={styles.difficultyWrapper}>
+                      <Text style={styles.regularText}>{difficulty}</Text>
+                      <ArrowDownIcon />
+                    </View>
+                  </TouchableOpacity>
+                  {difficultyVisible && (
+                    <View style={styles.difficultyOptionsWrapper}>
+                      <TouchableOpacity style={styles.difficultyOptionWrapper} onPress={() => chooseDifficulty(IDifficultyEnum.Easy)}>
+                        <Text style={styles.difficultyOptionText}>easy</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.difficultyOptionWrapper} onPress={() => chooseDifficulty(IDifficultyEnum.Hard)}>
+                        <Text style={styles.difficultyOptionText}>hard</Text>
+                      </TouchableOpacity>
+                    </View>
+                    )
+                  }
+                </View>
+
+                <View style={styles.inputWrapper}>
+                  <View style={styles.inputLabel}>
+                    <AmountIcon />
+                    <Text style={styles.inputLabelText}>Amount</Text>
+                  </View>
+                  <TextInput
+                    value={amount}
+                    onChangeText={setAmount}
+                    style={styles.amountInput}
+                    placeholder="Amount"
+                    placeholderTextColor={Colors.WHITE}
+                    keyboardType={'number-pad'}
+                    onFocus={onFocusInput}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.gradientButtonWrapper}>
+                <GradientButton title={'TRUE'} onPress={onContinuePress} disabled={isLoading} />
+              </View>
+
             </View>
-            <TextInput
-              value={amount}
-              onChange={setAmount}
-              style={styles.amountInput}
-              placeholder="Amount"
-              keyboardType={'number-pad'}
-            />
-          </View>
+          </>
 
-          <TouchableOpacity onPress={onContinuePress}>
-            <LinearGradient
-              style={styles.gradientContainer}
-              colors={[Colors.ORANGE, Colors.RED]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-            >
-              <Text>True</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+        </DismissKeyboardView>
+      </KeyboardAvoidingView>
 
-
-
-        </View>
-      </DismissKeyboardView>
-
-    </KeyboardAvoidingView>
+      <Image style={styles.image1} source={InitialScreenImage1} resizeMode={'contain'} />
+      <Image style={styles.image2} source={InitialScreenImage2} resizeMode={'contain'} />
+      <Image style={styles.image3} source={InitialScreenImage3} resizeMode={'contain'} />
+      <Image style={styles.image4} source={InitialScreenImage4} resizeMode={'contain'} />
+    </>
   );
 };
