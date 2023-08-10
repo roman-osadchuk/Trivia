@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: Colors.PRIMARY_BLUE,
+    zIndex: 100,
   },
   keyboardContainer: {
     flex: 1,
@@ -17,9 +18,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.PRIMARY_BLUE,
   },
+  emptyContainer: {
 
+  },
   headerWrapper: {
-    top: 60,
+    bottom: 20,
     alignSelf: 'center',
     alignItems: 'center',
   },
@@ -32,10 +35,10 @@ export const styles = StyleSheet.create({
   logoImage: {
     width: DEVICE_WIDTH - 120,
   },
-
   inputsContainer: {
     top: -20,
     width: '100%',
+    zIndex: 100,
   },
   inputWrapper: {
     width: '100%',
@@ -46,6 +49,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+    zIndex: 100,
   },
   inputLabelText: {
     color: Colors.ORANGE,
@@ -54,10 +58,6 @@ export const styles = StyleSheet.create({
     left: 12,
   },
   difficultyOptionsWrapper: {
-    // position: 'absolute',
-    // top: 40,
-    // left: 3,
-    // right: 3,
     borderRadius: 10,
     zIndex: 100,
   },
@@ -71,7 +71,6 @@ export const styles = StyleSheet.create({
     color: Colors.GINGER,
     fontSize: 13,
   },
-
 
   difficultyContainer: {
     width: '100%',
@@ -100,7 +99,8 @@ export const styles = StyleSheet.create({
   gradientButtonWrapper: {
     width: '100%',
     alignItems: 'center',
-    bottom: 40,
+    bottom: 50,
+    zIndex: 100,
   },
   gradientButtonLayout: {
     position: 'absolute',
@@ -110,28 +110,45 @@ export const styles = StyleSheet.create({
     left: 0,
     zIndex: 100,
   },
+  activityIndicatorContainer: {
+    position: 'absolute',
+    top: (DEVICE_HEIGHT / 2) - 100,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    zIndex: 200,
+  },
 
-
+  imagesWrapper: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1,
+  },
   image1: {
     position: 'absolute',
     left: 0,
-    top: 50,
+    top: 0,
+    zIndex: 60,
   },
   image2: {
     position: 'absolute',
     left: 0,
     bottom: 0,
-    zIndex: 0,
+    zIndex: 60,
   },
   image3: {
     position: 'absolute',
     right: 0,
     top: 0,
+    zIndex: 60,
   },
   image4: {
     position: 'absolute',
     right: 0,
     bottom: 0,
+    zIndex: 60,
   },
-
 });

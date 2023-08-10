@@ -1,5 +1,5 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ActivityIndicator, View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native';
 import { getQuestions } from 'src/redux/modules/Questions/actions';
 import { selectError, selectIsLoading, selectQuestions } from 'src/redux/modules';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +15,8 @@ import { RootStackParamList } from 'src/types/navigationTypes';
 
 // @ts-ignore
 import ArrowDownIcon from 'src/icons/ArrowDownIcon.svg';
+// @ts-ignore
+import BottomLeftIcon from 'src/icons/BottomLeftIcon.svg';
 // @ts-ignore
 import DifficultyIcon from 'src/icons/DifficultyIcon.svg';
 // @ts-ignore
@@ -42,7 +44,7 @@ export const InitialScreen = ({ navigation }: InitialScreenProps) => {
 
   useEffect(() => {
     if (apiQuestions.length && !isLoading) {
-      navigation.navigate(Screen.QuestionsScreen);
+      navigation.navigate(Screen.QuestionsScreen, { difficulty });
     }
   }, [apiQuestions, isLoading, navigation]);
 
@@ -51,14 +53,6 @@ export const InitialScreen = ({ navigation }: InitialScreenProps) => {
       Alert.alert('Error', questionsError?.message)
     }
   }, [questionsError])
-
-  const fetchQuestions = () => {
-    try {
-      dispatch(getQuestions(difficulty as any));
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const showDifficultyOptions = () => {
     setDifficultyVisible(true);
@@ -69,7 +63,7 @@ export const InitialScreen = ({ navigation }: InitialScreenProps) => {
   }
 
   const onContinuePress = (): void => {
-    fetchQuestions();
+    dispatch(getQuestions(difficulty as any));
   }
 
   const chooseDifficulty = (difficulty: IDifficultyEnum): void => {
@@ -80,19 +74,21 @@ export const InitialScreen = ({ navigation }: InitialScreenProps) => {
   return (
     <>
       <KeyboardAvoidingView
-        behavior={IS_IOS ? 'padding' : 'height'}
+        behavior={'padding'}
         style={styles.keyboardContainer}
-        keyboardVerticalOffset={-20}
+        keyboardVerticalOffset={IS_IOS ? -30 : -40}
       >
         <DismissKeyboardView>
           <>
             <View style={styles.screenContainer}>
-              <View style={styles.headerWrapper}>
-                <Text style={styles.headerText}>Welcome to the</Text>
-                <Image style={styles.logoImage} source={TriviaLogo} resizeMode={'contain'} />
-              </View>
+              <View style={styles.emptyContainer} />
 
               <View style={styles.inputsContainer}>
+                <View style={styles.headerWrapper}>
+                  <Text style={styles.headerText}>Welcome to the</Text>
+                  <Image style={styles.logoImage} source={TriviaLogo} resizeMode={'contain'} />
+                </View>
+
                 <View style={styles.inputWrapper}>
                   <View style={styles.inputLabel}>
                     <DifficultyIcon />
@@ -143,6 +139,12 @@ export const InitialScreen = ({ navigation }: InitialScreenProps) => {
 
         </DismissKeyboardView>
       </KeyboardAvoidingView>
+
+      {
+        isLoading && <View style={styles.activityIndicatorContainer}>
+          <ActivityIndicator color={Colors.GINGER} size="large" />
+        </View>
+      }
 
       <Image style={styles.image1} source={InitialScreenImage1} resizeMode={'contain'} />
       <Image style={styles.image2} source={InitialScreenImage2} resizeMode={'contain'} />

@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     top: 40,
     right: 30,
+    zIndex: 100,
   },
   mainContainer: {
     width: '88%',
@@ -68,7 +69,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 2,
   },
   listContainer: {
-    paddingBottom: 260,
+    paddingBottom: 270,
   },
   answerItemContainer: {
     flexDirection: 'row',

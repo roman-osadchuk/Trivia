@@ -62,7 +62,7 @@ export const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
       return ++acc
     }
     return acc;
-  }, 0), [answeredQuestions]);
+  }, 0), [answeredQuestions.length]);
 
   return (
     <View style={styles.container}>

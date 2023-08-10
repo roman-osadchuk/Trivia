@@ -8,12 +8,13 @@ import { useDispatch } from 'react-redux';
 type DisplayQuestionProps = {
   question: IQuestion;
   index: number;
+  level: number;
   length: number;
   key: string;
   onAnswer: () => void;
 };
 
-const DisplayQuestion = ({ question, index, length, key, onAnswer }: DisplayQuestionProps) => {
+const DisplayQuestion = ({ question, index, level, length, key, onAnswer }: DisplayQuestionProps) => {
   const dispatch = useDispatch();
 
   const checkIfAnswerIsCorrect = (answer: string) => {
@@ -35,7 +36,7 @@ const DisplayQuestion = ({ question, index, length, key, onAnswer }: DisplayQues
     <View style={styles.cardContainer} key={key}>
       <View style={styles.headerContainer}>
         <Text style={styles.categoryText}>{question.category}</Text>
-        <Text style={styles.levelText}>level 1</Text>
+        <Text style={styles.levelText}>level {level}</Text>
       </View>
 
       <View style={styles.progressContainer}>

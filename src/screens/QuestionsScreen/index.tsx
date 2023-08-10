@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RouteProp } from '@react-navigation/native';
 import DisplayQuestion from 'src/components/DisplayQuestion';
 import { clearAllQuestions, selectQuestions } from 'src/redux/modules';
 import { RootStackParamList } from 'src/types/navigationTypes';
@@ -9,7 +10,7 @@ import { Screen } from 'src/constants/screens';
 import BlueCloseIcon from 'src/icons/BlueCloseIcon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './styles';
-import { IQuestion } from 'src/types/questionTypes';
+import { IDifficultyEnum, IQuestion } from 'src/types/questionTypes';
 
 const QuestionsScreen1 = require('src/assets/QuestionsScreen1.png');
 const QuestionsScreen2 = require('src/assets/QuestionsScreen2.png');
@@ -18,13 +19,18 @@ const QuestionsScreen4 = require('src/assets/QuestionsScreen4.png');
 const QuestionsScreen5 = require('src/assets/QuestionsScreen5.png');
 
 type navigationQuestionsProp = NativeStackNavigationProp<RootStackParamList, Screen.QuestionsScreen>;
+type routeQuestionsProp = RouteProp<RootStackParamList, Screen.QuestionsScreen>;
 
 type QuestionsScreenProps = {
   navigation: navigationQuestionsProp;
+  route: routeQuestionsProp;
 };
 
-export const QuestionsScreen = ({ navigation }: QuestionsScreenProps) => {
+export const QuestionsScreen = ({ navigation, route }: QuestionsScreenProps) => {
   const dispatch = useDispatch();
+  const { difficulty } = route.params;
+
+  const level = difficulty === IDifficultyEnum.Easy ? 1 : 2;
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
 
@@ -63,6 +69,7 @@ export const QuestionsScreen = ({ navigation }: QuestionsScreenProps) => {
               <DisplayQuestion
                 question={question}
                 index={index}
+                level={level}
                 length={apiQuestions.length}
                 key={question.question}
                 onAnswer={onAnswer}

@@ -6,5 +6,6 @@ export enum Colors {
   ORANGE = '#FFA67A',
   GINGER = '#FF7878',
   RED = '#FF6065',
+  INTENSE_RED = '#CC4033',
   GREY = '#F9F9F9',
 }
