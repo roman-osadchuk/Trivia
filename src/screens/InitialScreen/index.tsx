@@ -76,12 +76,12 @@ export const InitialScreen = ({ navigation }: InitialScreenProps) => {
       <KeyboardAvoidingView
         behavior={'padding'}
         style={styles.keyboardContainer}
-        keyboardVerticalOffset={IS_IOS ? -30 : -40}
+        keyboardVerticalOffset={-40}
       >
         <DismissKeyboardView>
           <>
             <View style={styles.screenContainer}>
-              <View style={styles.emptyContainer} />
+              <View />
 
               <View style={styles.inputsContainer}>
                 <View style={styles.headerWrapper}>

@@ -18,9 +18,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.PRIMARY_BLUE,
   },
-  emptyContainer: {
-
-  },
   headerWrapper: {
     bottom: 20,
     alignSelf: 'center',
@@ -99,7 +96,7 @@ export const styles = StyleSheet.create({
   gradientButtonWrapper: {
     width: '100%',
     alignItems: 'center',
-    bottom: 50,
+    bottom: 60,
     zIndex: 100,
   },
   gradientButtonLayout: {
@@ -135,8 +132,8 @@ export const styles = StyleSheet.create({
   },
   image2: {
     position: 'absolute',
-    left: 0,
-    bottom: 0,
+    left: -5,
+    bottom: -5,
     zIndex: 60,
   },
   image3: {

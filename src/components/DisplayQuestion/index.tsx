@@ -17,12 +17,7 @@ type DisplayQuestionProps = {
 const DisplayQuestion = ({ question, index, level, length, key, onAnswer }: DisplayQuestionProps) => {
   const dispatch = useDispatch();
 
-  const checkIfAnswerIsCorrect = (answer: string) => {
-    if (question.correct_answer === answer) {
-      return true;
-    }
-    return false;
-  }
+  const checkIfAnswerIsCorrect = (answer: string) => question.correct_answer === answer;
 
   const handleOnAnswer = (answer: string) => {
     onAnswer()

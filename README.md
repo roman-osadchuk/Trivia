@@ -1,10 +1,32 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+## Step 1: Project installation
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+First you need to install all the dependencies for the project. Run at the _root_ of your React Native project:
 
-## Step 1: Start the Metro Server
+```bash
+# using npm
+npm install
+
+# OR using Yarn
+yarn install
+```
+
+Then go to ios folder by *cd ios* and Run:
+
+```bash
+pod install
+```
+
+## Step 2: Adding files from gitignore
+
+Create **.env** file in the _root_ of the project and add:
+
+```bash
+BASE_URL=https://opentdb.com
+```
+
+## Step 3: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
@@ -18,7 +40,7 @@ npm start
 yarn start
 ```
 
-## Step 2: Start your Application
+## Step 4: Start your Application
 
 Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
@@ -46,34 +68,22 @@ If everything is set up _correctly_, you should see your new app running in your
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
+## Step 5: Using your App
 
-Now that you have successfully run the app, let's modify it.
+On the **Initial screen** you will be provided with an option to choose Difficulty level
+And also you are able to type your score
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+By pressing **True** button you need to wait before api  request is finished and after you you will be redirected to Questions screen.
+There you will see a **X** button in the top right corner. By pressing ot will be redirected back to Initial screen and lose your progress.
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+On the **Questions screen** you will be provided with 10 questions with **True** and **False** options to answer.
+Also, the progress bar will show you how many questions left.
+After 10th question you will be redirected to Results screen.
 
-## Congratulations! :tada:
+There you will also see **X** button in the top right corner. By pressing it will be redirected back to Initial screen.
+On **Results screen** you can see on witch questions you have provided correct answer and witch answers were wrong.
+By pressing **Play again** button you will be redirected to the Initial screen, and you can start the game again.
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## Notes:
+- When you answer some questions and close the app you will get to the same question after opening the app again and the progress is saved
+- On Questions screen the top right **Close icon** might just navigate the user back to the Initial screen. But as there is no certain way to more forward and continue answering the questions - the progress gets cleared. 

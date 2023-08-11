@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
 import DisplayQuestion from 'src/components/DisplayQuestion';
-import { clearAllQuestions, selectQuestions } from 'src/redux/modules';
+import { clearAllQuestions, selectAnsweredQuestions, selectQuestions } from 'src/redux/modules';
 import { RootStackParamList } from 'src/types/navigationTypes';
 import { Screen } from 'src/constants/screens';
 // @ts-ignore
@@ -35,6 +35,20 @@ export const QuestionsScreen = ({ navigation, route }: QuestionsScreenProps) => 
   const [currentQuestion, setCurrentQuestion] = useState(0)
 
   const apiQuestions = useSelector(selectQuestions);
+  const answeredQuestions = useSelector(selectAnsweredQuestions);
+
+  useLayoutEffect(() => {
+    const getCurrentQuestionFromStore = answeredQuestions.reduce((acc, next) => {
+      if (next.isUserAnswerCorrect !== undefined) {
+        return ++acc
+      }
+      return acc;
+    }, 0)
+
+    if (getCurrentQuestionFromStore) {
+      setCurrentQuestion(+getCurrentQuestionFromStore)
+    }
+  }, []);
 
   const onAnswer = () => {
     setCurrentQuestion(prevState => ++prevState)
