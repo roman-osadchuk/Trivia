@@ -1,6 +1,11 @@
 import { TouchableWithoutFeedback, Keyboard, View } from 'react-native';
+import React, { ElementType } from 'react';
 
-const DismissKeyboardHOC = (Comp: any) => {
+type PropsWithChildren<P> = P & {
+  children?: React.ReactNode;
+}
+
+const DismissKeyboardHOC = (Comp: PropsWithChildren<typeof React.Component>) => {
   return ({ children, ...props }: { children: JSX.Element | JSX.Element[] }) => (
     <TouchableWithoutFeedback
       onPress={Keyboard.dismiss}

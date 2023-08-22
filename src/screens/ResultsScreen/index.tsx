@@ -10,15 +10,10 @@ import { styles } from './styles';
 import { Colors } from 'src/constants/colors';
 import { IAnsweredQuestion } from 'src/types/questionTypes';
 import GradientButton from 'src/components/GradientButton';
-// @ts-ignore
 import WhiteCloseIcon from 'src/icons/WhiteCloseIcon.svg';
-// @ts-ignore
 import FadeStarIcon from 'src/icons/FadeStarIcon.svg';
-// @ts-ignore
 import BrightStarIcon from 'src/icons/BrightStarIcon.svg';
-// @ts-ignore
 import CheckIcon from 'src/icons/CheckIcon.svg';
-// @ts-ignore
 import BlueCloseIcon from 'src/icons/BlueCloseIcon.svg';
 const ResultsScreen1 = require('src/assets/ResultsScreen1.png');
 const ResultsScreen2 = require('src/assets/ResultsScreen2.png');

@@ -6,7 +6,6 @@ import DisplayQuestion from 'src/components/DisplayQuestion';
 import { clearAllQuestions, selectAnsweredQuestions, selectQuestions } from 'src/redux/modules';
 import { RootStackParamList } from 'src/types/navigationTypes';
 import { Screen } from 'src/constants/screens';
-// @ts-ignore
 import BlueCloseIcon from 'src/icons/BlueCloseIcon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './styles';

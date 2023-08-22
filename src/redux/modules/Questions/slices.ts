@@ -1,12 +1,18 @@
 import { persistReducer } from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage, { AsyncStorageStatic } from '@react-native-async-storage/async-storage';
 import { createSlice, SerializedError } from '@reduxjs/toolkit';
 import { IAnsweredQuestion, IQuestion } from 'src/types/questionTypes';
 
-const persistConfig = <any>{
+type persistConfigType = {
+  key: string,
+  storage: AsyncStorageStatic,
+  timeout: undefined | number,
+}
+
+const persistConfig = <persistConfigType>{
   key: 'questions',
   storage: AsyncStorage,
-  timeout: null,
+  timeout: undefined,
 };
 
 export interface IQuestionsState {

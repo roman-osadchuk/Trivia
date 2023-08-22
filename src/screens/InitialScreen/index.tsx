@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native';
-import { getQuestions } from 'src/redux/modules/Questions/actions';
+import { getQuestions, getQuestionsActionType } from 'src/redux/modules/Questions/actions';
 import { selectError, selectIsLoading, selectQuestions } from 'src/redux/modules';
 import { useDispatch, useSelector } from 'react-redux';
 import { Screen } from 'src/constants/screens';
@@ -8,18 +8,11 @@ import { styles } from './styles';
 import { IDifficultyEnum } from 'src/types/questionTypes';
 import { DismissKeyboardView } from 'src/hoc/DismissKeyboard';
 import { Colors } from 'src/constants/colors';
-import { IS_IOS } from 'src/utils/metrics';
 import GradientButton from 'src/components/GradientButton';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'src/types/navigationTypes';
-
-// @ts-ignore
 import ArrowDownIcon from 'src/icons/ArrowDownIcon.svg';
-// @ts-ignore
-import BottomLeftIcon from 'src/icons/BottomLeftIcon.svg';
-// @ts-ignore
 import DifficultyIcon from 'src/icons/DifficultyIcon.svg';
-// @ts-ignore
 import AmountIcon from 'src/icons/AmountIcon.svg';
 const TriviaLogo = require('src/assets/Trivia.png');
 const InitialScreenImage1 = require('src/assets/InitialScreenImage1.png');
@@ -34,7 +27,7 @@ type InitialScreenProps = {
 };
 
 export const InitialScreen = ({ navigation }: InitialScreenProps) => {
-  const [amount, setAmount] = useState('0');
+  const [amount, setAmount] = useState(0);
   const [difficulty, setDifficulty] = useState(IDifficultyEnum.Easy);
   const [difficultyVisible, setDifficultyVisible] = useState(false);
   const apiQuestions = useSelector(selectQuestions);
@@ -54,6 +47,10 @@ export const InitialScreen = ({ navigation }: InitialScreenProps) => {
     }
   }, [questionsError])
 
+  const onChangeText = (input: string) => {
+    setAmount(+input);
+  }
+
   const showDifficultyOptions = () => {
     setDifficultyVisible(true);
   }
@@ -62,11 +59,11 @@ export const InitialScreen = ({ navigation }: InitialScreenProps) => {
     setDifficultyVisible(false);
   }
 
-  const onContinuePress = (): void => {
-    dispatch(getQuestions(difficulty as any));
+  const onContinuePress = () => {
+    dispatch(getQuestions(difficulty));
   }
 
-  const chooseDifficulty = (difficulty: IDifficultyEnum): void => {
+  const chooseDifficulty = (difficulty: IDifficultyEnum) => {
     setDifficulty(difficulty);
     setDifficultyVisible(false);
   }
@@ -119,8 +116,8 @@ export const InitialScreen = ({ navigation }: InitialScreenProps) => {
                     <Text style={styles.inputLabelText}>Amount</Text>
                   </View>
                   <TextInput
-                    value={amount}
-                    onChangeText={setAmount}
+                    value={amount.toString()}
+                    onChangeText={onChangeText}
                     style={styles.amountInput}
                     placeholder="Amount"
                     placeholderTextColor={Colors.WHITE}

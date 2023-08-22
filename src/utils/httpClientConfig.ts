@@ -2,6 +2,13 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import type { TStore } from 'src/store';
 import env from 'react-native-config';
 
+export interface BEResponse {
+  response: {
+    data: object
+    error?: null
+  }
+}
+
 export class HttpClientConfig {
   public httpClient!: AxiosInstance
   private store!: TStore
@@ -24,7 +31,7 @@ export class HttpClientConfig {
     this.httpClient.interceptors.response.use(this._handleResponse, this._handleError);
   }
 
-  create(arg0: { baseURL: any; headers: {}; }): AxiosInstance {
+  create(arg0: { baseURL: string; headers: {}; }): AxiosInstance {
     throw new Error('Method not implemented.');
   }
 
@@ -32,10 +39,14 @@ export class HttpClientConfig {
     return config;
   }
 
-  private _handleResponse = (response: AxiosResponse<any>): AxiosResponse<any> | Promise<AxiosResponse<any>> | any => {
+  private _handleResponse = (response: AxiosResponse): { eject(id: number): void; data: any; use<T>(onFulfilled: (((value: AxiosResponse) => (Promise<T> | T)) | undefined), onRejected: (((error: any) => any) | undefined)): number; error: null } => {
     return {
+      use<T>(onFulfilled: ((value: AxiosResponse) => (Promise<T> | T)) | undefined, onRejected: ((error: any) => any) | undefined): number {
+        return 0;
+      }, eject(id: number): void {
+      },
       data: response.data,
-      error: null,
+      error: null
     };
   }
 
